@@ -54,7 +54,6 @@ int SpreadMonitor::IO_event_callback(int fd){
 	int size = SP_receive(fd, &srv_type, sender_pgrp, MAXNSPGROUP, \
 									&num_group, groups, &msg_type, &endian, MAX_MSGLEN, (char*)inbuff);
 	if ((size == ILLEGAL_SESSION) || (size == ILLEGAL_MESSAGE) || (size == CONNECTION_CLOSED)) {
-		//sp_errno = SPUERR_SYSTEM;
 		log(LOG_CRIT, "Spread is wrong state, trying to restart");
 		SP_error(size);
 		//SP_quit(fd,REPLGROUP);
@@ -200,12 +199,10 @@ int SpreadMonitor::SP_recv_timeo(mailbox mbox, char sender[MAX_GROUP_NAME],
     do {
         int res = poll(&pfd, 1, time_before_expr);
         if (res == 0) {
-            //sp_errno = SPUERR_TIMED_OUT;
             return  -1;
         }
         /* socket error */
         if ((res < 0) && (errno != EINTR)) {
-            //sp_errno = SPUERR_POLL_ERR;
             return  -2;
         }
         if (pfd.revents & POLLIN) {
@@ -217,7 +214,6 @@ int SpreadMonitor::SP_recv_timeo(mailbox mbox, char sender[MAX_GROUP_NAME],
                 mbox, &srv_type, sender, MAXNSPGROUP, num_group, groups,
                 msg_type, &endian, buf_size, inbuff  );
             if ((size == ILLEGAL_SESSION) || (size == ILLEGAL_MESSAGE)  || (size == CONNECTION_CLOSED)) {
-                //sp_errno = SPUERR_SYSTEM;
                 SP_error(size);
                 log(LOG_CRIT, "SP_receive error ");
                 return   -3;
