@@ -1,8 +1,15 @@
 DBMMSync
 ----------------
 
-This project is implemented to sync up DB in Master-Master mode. It utilizes the grouping message feature from Spread toolkit library.
+Creator: Bin Yang  binyangch@gmail.com
+Version: 0.0.1
 
-DB logging of SQL clause are supposed to turn on, so their changes can be detected by inotify_event.
+Features:
+- Sync up Databases in Master-Master mode. It takes advantage of the grouping message feature of Spread toolkit library.
+- Current code uses postgresql as example, but possibly extended to other DB.
 
-Sometimes SQL write operation is not directly manipulated, such as Java entity bean, but they can appear in the debug log or WAL. So the project could be more helpful in such scenario.
+Sometimes SQL write operation is not directly manipulated, such as Java entity bean, but they appear in the DB log or WAL. So the project could be more helpful in such scenario.
+
+Dependencies:
+- DB logging of SQL clause are supposed to turn on, so their changes can be detected by inotify_event.
+
